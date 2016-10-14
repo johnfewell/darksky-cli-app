@@ -5,16 +5,32 @@ class DarkskyCliApp::CLI
   end
 
   def todays_weather(location)
-    #the scrapping will happen here
-    puts "Brooklyn: 62˚ Clear"
+    puts ""
+    puts "----------------------"
+    puts "#{location}: 62˚ Clear"
     puts "Clear throughout the day."
     puts "Next Hour: Clear. No precipitation anywhere in the area."
-    puts "Now: 62˚, 6pm: 61˚, 8pm: 57˚, 10pm: 54˚, 12am: 52˚, 2am: 50˚, 4am: 49˚, 6am: 47˚, 8am:48˚, 10am: 55˚, 12pm: 60˚, 2pm: 64˚."
+    puts "----------------------"
+    puts "Now: 62˚"
+    puts "6pm: 61˚"
+    puts "8pm: 57˚"
+    puts "10pm: 54˚"
+    puts "12am: 52˚"
+    puts "2am: 50˚"
+    puts "4am: 49˚"
+    puts "6am: 47˚"
+    puts "8am: 48˚"
+    puts "10am: 55˚"
+    puts "12pm: 60˚"
+    puts "2pm: 64˚"
+    puts "----------------------"
+    puts ""
   end
 
   def ten_day_forecast
-    #this will scrape the 10 day forecast
+    puts "----------------------"
     puts "Drizzle on Monday and Friday, with temperatures rising to 77°F on Wednesday."
+    puts "----------------------"
     puts "☀ Fri H:63 L:49"
     puts "☀ Sat H:65 L:47"
     puts "☁️ Sun H:70 L:50"
@@ -23,6 +39,7 @@ class DarkskyCliApp::CLI
     puts "☀ Wed H:77 L:64"
     puts "☁️ Thu H:69 L:58"
     puts "🌧 Fri H:63 L:57"
+    puts "----------------------"
   end
 
   def get_geo(location)
@@ -35,9 +52,24 @@ class DarkskyCliApp::CLI
     while input != "exit"
     puts "Enter a location to get today's weather forcast:"
     input = gets.strip.downcase
-    if check_location(input) == nil
-      puts "Could not find that location, please try another"
-    puts "Do you want the 10 day forcast for this location or do ytou want to find today's weather at a different location?"
+    if input == "exit"
+      exit
+    else
+      if get_geo(input) == nil
+        puts "Could not find that location, please try another"
+      else
+        todays_weather(input)
+      end
+      puts "Do you want the 10 day forcast for this location or do you want to find today's weather at a different location?"
+      input = gets.strip.downcase
+      if input == "y"
+        ten_day_forecast
+      elsif input == "n"
+        puts "Do you want to exit?"
+        input = gets.strip.downcase
+      end
+    end
   end
+end
 
 end
