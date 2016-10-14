@@ -1,3 +1,5 @@
 #!/usr/bin/env ruby
 
-puts "DOOD!"
+require './lib/darksky_cli_app'
+
+DarkskyCliApp::CLI.new.call
