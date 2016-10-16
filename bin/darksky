@@ -2,4 +2,5 @@
 
 require './lib/darksky_cli_app'
 
+
 DarkskyCliApp::CLI.new.call
