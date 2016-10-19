@@ -1,45 +1,31 @@
 class DarkskyCliApp::Weather
-attr_accessor :name, :now, :later, :now_desc, :hr1, :hr2, :hr3, :hr4, :hr5, :hr6, :hr7, :hr8, :hr9, :hr10, :hr11, :hr12
+attr_accessor :name, :now, :later, :now_desc, :hrs
+
+  def initialize
+    @name = name
+    @now = now
+    @now_desc = now_desc
+    @later = later
+    @hrs = []
+  end
 
   def today(location)
-    weather_here = self
-    weather_here.name = location
-    weather_here.now = "#{weather_here.name}: 62˚ Clear"
-    weather_here.now_desc = "Clear throughout the day."
-    weather_here.later = "Next Hour: Clear. No precipitation anywhere in the area."
-    weather_here.hr1 = "Now: 62˚"
-    weather_here.hr2 = "6pm: 61˚"
-    weather_here.hr3 = "8pm: 57˚"
-    weather_here.hr4 = "10pm: 54˚"
-    weather_here.hr5 = "12am: 52˚"
-    weather_here.hr6 = "2am: 50˚"
-    weather_here.hr7 = "4am: 49˚"
-    weather_here.hr8 = "6am: 47˚"
-    weather_here.hr9 = "8am: 48˚"
-    weather_here.hr10 = "10am: 55˚"
-    weather_here.hr11 = "12pm: 60˚"
-    weather_here.hr12 = "2pm: 64˚"
-
-    puts ""
-    puts "----------------------"
-    puts weather_here.now
-    puts weather_here.now_desc
-    puts weather_here.later
-    puts "----------------------"
-    puts weather_here.hr1
-    puts weather_here.hr2
-    puts weather_here.hr3
-    puts weather_here.hr4
-    puts weather_here.hr5
-    puts weather_here.hr6
-    puts weather_here.hr7
-    puts weather_here.hr8
-    puts weather_here.hr9
-    puts weather_here.hr10
-    puts weather_here.hr11
-    puts weather_here.hr12
-    puts "----------------------"
-    puts ""
+    self.name = location
+    self.now = "#{self.name}: 62˚ Clear"
+    self.now_desc = "Clear throughout the day."
+    self.later = "Next Hour: Clear. No precipitation anywhere in the area."
+    self.hrs[1] = "Now: 62˚"
+    self.hrs[2] = "6pm: 61˚"
+    self.hrs[3] = "8pm: 57˚"
+    self.hrs[4] = "10pm: 54˚"
+    self.hrs[5] = "12am: 52˚"
+    self.hrs[6] = "2am: 50˚"
+    self.hrs[7] = "4am: 49˚"
+    self.hrs[8] = "6am: 47˚"
+    self.hrs[9] = "8am: 48˚"
+    self.hrs[10] = "10am: 55˚"
+    self.hrs[11] = "12pm: 60˚"
+    self.hrs[12] = "2pm: 64˚"
   end
 
   def ten_day

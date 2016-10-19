@@ -5,7 +5,30 @@ class DarkskyCliApp::CLI
   end
 
   def todays_weather(location)
-    @weather = DarkskyCliApp::Weather.new.today(location)
+    @weather = DarkskyCliApp::Weather.new
+    @weather.today(location)
+
+    puts ""
+    puts "----------------------"
+    puts @weather.now
+    puts @weather.now_desc
+    puts @weather.later
+    puts "----------------------"
+    puts @weather.hrs[1]
+    puts @weather.hrs[2]
+    puts @weather.hrs[3]
+    puts @weather.hrs[4]
+    puts @weather.hrs[5]
+    puts @weather.hrs[6]
+    puts @weather.hrs[7]
+    puts @weather.hrs[8]
+    puts @weather.hrs[9]
+    puts @weather.hrs[10]
+    puts @weather.hrs[11]
+    puts @weather.hrs[12]
+    puts "----------------------"
+    puts ""
+
   end
 
   def ten_day_forecast
