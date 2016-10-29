@@ -14,6 +14,7 @@ class DarkskyCliApp::CLI
     puts @weather.now_desc
     puts @weather.later
     puts "----------------------"
+    puts @weather.hrs[0]
     puts @weather.hrs[1]
     puts @weather.hrs[2]
     puts @weather.hrs[3]
@@ -25,7 +26,6 @@ class DarkskyCliApp::CLI
     puts @weather.hrs[9]
     puts @weather.hrs[10]
     puts @weather.hrs[11]
-    puts @weather.hrs[12]
     puts "----------------------"
     puts ""
 
@@ -33,6 +33,18 @@ class DarkskyCliApp::CLI
 
   def ten_day_forecast
     @weather = DarkskyCliApp::Weather.new.ten_day
+    puts "----------------------"
+    puts @weather.eight_day_desc
+    puts "----------------------"
+    puts @weather.eight_day_days[0]
+    puts @weather.eight_day_days[1]
+    puts @weather.eight_day_days[2]
+    puts @weather.eight_day_days[3]
+    puts @weather.eight_day_days[4]
+    puts @weather.eight_day_days[5]
+    puts @weather.eight_day_days[6]
+    puts @weather.eight_day_days[7]
+    puts "----------------------"
   end
 
   def get_geo(location)
