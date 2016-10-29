@@ -11,7 +11,9 @@ attr_accessor :name, :now, :later, :now_desc, :hrs, :eight_day_desc, :eight_day_
   end
 
   def today(location)
+    DarkskyCliApp::Scraper.new.get_page(location)
     self.name = location
+    doc.(span.temp swip)
     self.now = "#{self.name}: 62˚ Clear"
     self.now_desc = "Clear throughout the day."
     self.later = "Next Hour: Clear. No precipitation anywhere in the area."
@@ -39,6 +41,10 @@ attr_accessor :name, :now, :later, :now_desc, :hrs, :eight_day_desc, :eight_day_
     self.eight_day_days[5] = "☀ Wed H:77 L:64"
     self.eight_day_days[6] = "☁️ Thu H:69 L:58"
     self.eight_day_days[7] = "🌧 Fri H:63 L:57"
+  end
+
+  def doc
+    @doc ||= Nokogiri::HTML(open(self.url))
   end
 
 end
