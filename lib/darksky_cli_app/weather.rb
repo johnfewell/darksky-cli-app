@@ -1,5 +1,5 @@
 class DarkskyCliApp::Weather
-attr_accessor :name, :now, :later, :now_desc, :hrs, :eight_day_desc, :eight_day_days
+attr_accessor :name, :now, :later, :now_desc, :hrs, :eight_day_desc, :eight_day_days, :now_one_word, :hrs_temps
 
   def initialize
     @name = name
@@ -7,13 +7,14 @@ attr_accessor :name, :now, :later, :now_desc, :hrs, :eight_day_desc, :eight_day_
     @now_desc = now_desc
     @later = later
     @hrs = []
+    @hrs_temps
     @eight_day_days = []
   end
 
   def today(location)
     DarkskyCliApp::Scraper.new.get_page(location)
     self.name = location
-    doc.(span.temp swip)
+
     self.now = "#{self.name}: 62˚ Clear"
     self.now_desc = "Clear throughout the day."
     self.later = "Next Hour: Clear. No precipitation anywhere in the area."
@@ -41,6 +42,31 @@ attr_accessor :name, :now, :later, :now_desc, :hrs, :eight_day_desc, :eight_day_
     self.eight_day_days[5] = "☀ Wed H:77 L:64"
     self.eight_day_days[6] = "☁️ Thu H:69 L:58"
     self.eight_day_days[7] = "🌧 Fri H:63 L:57"
+  end
+
+#this is just the number and degree symbol
+  def now_temp
+    @now_temp ||= doc.xpath(//span[@class="temp swip"]).text
+  end
+#this is the one word desc of the weather
+  def now_one_word
+    @now_one_word ||= doc.xpath(//span[@class="summary swap"]).text
+  end
+#current weather sentance desc
+  def now_desc
+    @now_desc ||= doc.xpath(//span[@class="next swap"]).text
+  end
+#later today weather one sentance
+  def later
+    @later ||= doc.xpath(//span[@class="summary swap"]).text
+  end
+
+  def hrs
+    @hrs ||= doc.xpath(//span[@class="hour"])text.split(" ")
+  end
+
+  def hrs_temps
+    @hrs_temps ||= doc.xpath(//div[@id="timeline"]).text.split("˚")
   end
 
   def doc
