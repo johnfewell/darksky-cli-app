@@ -7,7 +7,7 @@ class DarkskyCliApp::CLI
   def todays_weather(location)
     @weather = DarkskyCliApp::Weather.new
     @weather.today(location)
-    DarkskyCliApp::Scraper.new.get_page(location)
+    # DarkskyCliApp::Scraper.new.get_page(location)
     puts ""
     puts "----------------------"
     puts @weather.now

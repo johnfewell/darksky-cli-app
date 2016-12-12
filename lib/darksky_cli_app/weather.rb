@@ -1,8 +1,9 @@
 class DarkskyCliApp::Weather
-attr_accessor :name, :now, :later, :now_desc, :hrs, :eight_day_desc, :eight_day_days, :now_one_word, :hrs_temps
+attr_accessor :name, :now, :later, :now_desc, :hrs, :eight_day_desc, :eight_day_days, :now_one_word, :hrs_temps, :url
 
-  def initialize
+  def initialize(name=nil, url=nil)
     @name = name
+    @url = url
     @now = now
     @now_desc = now_desc
     @later = later
@@ -12,12 +13,12 @@ attr_accessor :name, :now, :later, :now_desc, :hrs, :eight_day_desc, :eight_day_
   end
 
   def today(location)
-    DarkskyCliApp::Scraper.new.get_page(location)
+  #  DarkskyCliApp::Scraper.new.get_page(location)
     self.name = location
 
-    self.now = "#{self.name}: 62˚ Clear"
-    self.now_desc = "Clear throughout the day."
-    self.later = "Next Hour: Clear. No precipitation anywhere in the area."
+    self.now = "#{self.name}: #{self.now_temp} #{self.now_one_word}"
+    self.now_desc = @now_desc
+    self.later = @later
     self.hrs[0] = "Now: 62˚"
     self.hrs[1] = "6pm: 61˚"
     self.hrs[2] = "8pm: 57˚"
@@ -70,7 +71,7 @@ attr_accessor :name, :now, :later, :now_desc, :hrs, :eight_day_desc, :eight_day_
   end
 
   def doc
-    @doc ||= Nokogiri::HTML(open(self.url))
+    @doc ||= Nokogiri::HTML(open("https://www.darksky.net/37.3874,-121.9024"))
   end
 
 end
