@@ -46,27 +46,27 @@ attr_accessor :name, :now, :later, :now_desc, :hrs, :eight_day_desc, :eight_day_
 
 #this is just the number and degree symbol
   def now_temp
-    @now_temp ||= doc.xpath(//span[@class="temp swip"]).text
+    @now_temp ||= doc.xpath("//span[@class='temp swip']").text
   end
 #this is the one word desc of the weather
   def now_one_word
-    @now_one_word ||= doc.xpath(//span[@class="summary swap"]).text
+    @now_one_word ||= doc.xpath("//span[@class='summary swap']").text
   end
 #current weather sentance desc
   def now_desc
-    @now_desc ||= doc.xpath(//span[@class="next swap"]).text
+    @now_desc ||= doc.xpath("//span[@class='next swap']").text
   end
 #later today weather one sentance
   def later
-    @later ||= doc.xpath(//span[@class="summary swap"]).text
+    @later ||= doc.xpath("//span[@class='summary swap']").text
   end
 
   def hrs
-    @hrs ||= doc.xpath(//span[@class="hour"])text.split(" ")
+    @hrs ||= doc.xpath("//span[@class='hour']").text.split(" ")
   end
 
   def hrs_temps
-    @hrs_temps ||= doc.xpath(//div[@id="timeline"]).text.split("˚")
+    @hrs_temps ||= doc.xpath("//div[@id='timeline']").text.split("˚")
   end
 
   def doc
