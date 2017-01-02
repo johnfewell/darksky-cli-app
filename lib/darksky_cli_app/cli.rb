@@ -19,18 +19,18 @@ class DarkskyCliApp::CLI
 
   def ten_day_forecast
     #@weather = DarkskyCliApp::Weather.new.ten_day
-    @weather.eight_day
+    @weather.days_temps
     puts "----------------------"
-    puts @weather.days_temps
+    puts @weather.days_summary[0]
     puts "----------------------"
-    puts @weather.eight_day_days[0]
-    puts @weather.eight_day_days[1]
-    puts @weather.eight_day_days[2]
-    puts @weather.eight_day_days[3]
-    puts @weather.eight_day_days[4]
-    puts @weather.eight_day_days[5]
-    puts @weather.eight_day_days[6]
-    puts @weather.eight_day_days[7]
+    puts "#{@weather.days_names[0]} H:#{@weather.days_temps_max[0]} L:#{@weather.days_temps_min[0]} #{@weather.days_summary[1]}"
+    puts "#{@weather.days_names[1]} H:#{@weather.days_temps_max[1]} L:#{@weather.days_temps_min[1]} #{@weather.days_summary[2]}"
+    puts "#{@weather.days_names[2]} H:#{@weather.days_temps_max[2]} L:#{@weather.days_temps_min[2]} #{@weather.days_summary[3]}"
+    puts "#{@weather.days_names[3]} H:#{@weather.days_temps_max[3]} L:#{@weather.days_temps_min[3]} #{@weather.days_summary[4]}"
+    puts "#{@weather.days_names[4]} H:#{@weather.days_temps_max[4]} L:#{@weather.days_temps_min[4]} #{@weather.days_summary[5]}"
+    puts "#{@weather.days_names[5]} H:#{@weather.days_temps_max[5]} L:#{@weather.days_temps_min[5]} #{@weather.days_summary[6]}"
+    puts "#{@weather.days_names[6]} H:#{@weather.days_temps_max[6]} L:#{@weather.days_temps_min[6]} #{@weather.days_summary[7]}"
+    puts "#{@weather.days_names[7]} H:#{@weather.days_temps_max[7]} L:#{@weather.days_temps_min[7]} #{@weather.days_summary[8]}"
     puts "----------------------"
   end
 
@@ -52,7 +52,7 @@ class DarkskyCliApp::CLI
       else
         todays_weather(input)
       end
-      puts "Do you want the 10 day forecast for this location? y/n"
+      puts "Do you want the 8 day forecast for this location? y/n"
       input = gets.strip.downcase
       if input == "y"
         ten_day_forecast
