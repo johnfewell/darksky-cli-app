@@ -2,7 +2,7 @@
 
 require 'pry'
 class DarkskyCliApp::Weather
-attr_accessor :name, :now, :later, :later_desc, :eight_day_desc, :eight_day_days, :now_one_word, :days_temps_max, :days_names, :days_summary, :days_temps_min, :url
+attr_accessor :name, :now, :later, :later_desc, :eight_day_desc, :eight_day_days, :now_one_word, :days_temps_max, :days_names, :days_summary, :days_temps_min, :url, :location_lat, :location_lng
 
   def initialize(name=nil, url=nil)
     @name = name
@@ -17,24 +17,17 @@ attr_accessor :name, :now, :later, :later_desc, :eight_day_desc, :eight_day_days
     @eight_day_days = []
   end
 
-  def today(location)
-  #  DarkskyCliApp::Scraper.new.get_page(location)
-    self.name = location
+  def today
     self.now = "#{self.name}: #{self.now_temp} #{self.now_one_word}"
   end
 
-  # def eight_day
-  #   days_temps
-  #   self.eight_day_desc = "Drizzle on Monday and Friday, with temperatures rising to 77°F on Wednesday."
-  #   self.eight_day_days[0] = "☀ Fri H:63 L:49"
-  #   self.eight_day_days[1] = "☀ Sat H:65 L:47"
-  #   self.eight_day_days[2] = "☁️ Sun H:70 L:50"
-  #   self.eight_day_days[3] = "🌧 Mon H:59 L:74"
-  #   self.eight_day_days[4] = "⛅ Tue H:76 L:61"
-  #   self.eight_day_days[5] = "☀ Wed H:77 L:64"
-  #   self.eight_day_days[6] = "☁️ Thu H:69 L:58"
-  #   self.eight_day_days[7] = "🌧 Fri H:63 L:57"
-  # end
+  def get_geo(location)
+    location_search = Geocoder.search(location)
+    location_result = location_search[0]
+    self.name = location_result.data["formatted_address"]
+    self.location_lat = location_result.data["geometry"]["location"]["lat"]
+    self.location_lng = location_result.data["geometry"]["location"]["lng"]
+  end
 
 #this is just the number and degree symbol
   def now_temp
@@ -61,12 +54,12 @@ attr_accessor :name, :now, :later, :later_desc, :eight_day_desc, :eight_day_days
     @days_names = doc.xpath("//span[@class='name']").text.split(" ")
     @days_summary = doc.xpath("//div[@class='summary']").text.strip.split(".")
     @days_summary.map! {|d| d.strip + "."}
-
-    #binding.pry
   end
 
   def doc
-    @doc ||= Nokogiri::HTML(open("https://www.darksky.net/40.7306,-73.9866"))
+    url = "https://www.darksky.net/" + self.location_lat.to_s + self.location_lng.to_s
+    binding.pry
+    @doc ||= Nokogiri::HTML(open(url))
   end
 
 end

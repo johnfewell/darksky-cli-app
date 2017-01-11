@@ -6,15 +6,14 @@ class DarkskyCliApp::CLI
 
   def todays_weather(location)
     @weather = DarkskyCliApp::Weather.new
-    @weather.today(location)
+    @weather.get_geo(location)
+    @weather.today
     # DarkskyCliApp::Scraper.new.get_page(location)
     puts ""
     puts "----------------------"
     puts "#{@weather.now} #{@weather.later_desc}"
     puts @weather.later
     puts "----------------------"
-    #puts ""
-
   end
 
   def ten_day_forecast
@@ -35,8 +34,11 @@ class DarkskyCliApp::CLI
   end
 
   def get_geo(location)
-    #this will use the geolocation gem
-    location
+    location_search = Geocoder.search(location)
+    location_result = location_search[0]
+    location_lat = location_result.data["geometry"]["location"]["lat"]
+    location_lng = location_result.data["geometry"]["location"]["lng"]
+    #binding.pry
   end
 
   def menu
@@ -47,11 +49,8 @@ class DarkskyCliApp::CLI
     if input == "exit"
       exit
     else
-      if get_geo(input) == nil
-        puts "Could not find that location, please try another"
-      else
-        todays_weather(input)
-      end
+      todays_weather(input)
+    end
       puts "Do you want the 8 day forecast for this location? y/n"
       input = gets.strip.downcase
       if input == "y"
@@ -69,4 +68,4 @@ class DarkskyCliApp::CLI
   end
 end
 
-end
+
