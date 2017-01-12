@@ -4,30 +4,29 @@ require 'pry'
 class DarkskyCliApp::Weather
 attr_accessor :name, :now, :later, :later_desc, :eight_day_desc, :eight_day_days, :now_one_word, :days_temps_max, :days_names, :days_summary, :days_temps_min, :url, :location_lat, :location_lng
 
-  def initialize(name=nil, url=nil)
+  def initialize(name = nil, url =nil)
+    # @location = location
     @name = name
     @url = url
     @now = now
-    @later_desc = later_desc
     @later = later
     @days_temps_max = []
     @days_temps_min = []
     @days_summary = []
     @days_names = []
     @eight_day_days = []
+    # get_geo(location)
+    #binding.pry
   end
 
-  def today
-    self.now = "#{self.name}: #{self.now_temp} #{self.now_one_word}"
-  end
-
-  def get_geo(location)
-    location_search = Geocoder.search(location)
-    location_result = location_search[0]
-    self.name = location_result.data["formatted_address"]
-    self.location_lat = location_result.data["geometry"]["location"]["lat"]
-    self.location_lng = location_result.data["geometry"]["location"]["lng"]
-  end
+  # def get_geo(location)
+  #   location_search = Geocoder.search(location)
+  #   location_result = location_search[0]
+  #   self.name = location_result.data["formatted_address"]
+  #   self.location_lat = location_result.data["geometry"]["location"]["lat"]
+  #   self.location_lng = location_result.data["geometry"]["location"]["lng"]
+  #   self.url = "https://www.darksky.net/forecast/" + self.location_lat.to_s + "," + self.location_lng.to_s
+  # end
 
 #this is just the number and degree symbol
   def now_temp
@@ -57,8 +56,7 @@ attr_accessor :name, :now, :later, :later_desc, :eight_day_desc, :eight_day_days
   end
 
   def doc
-    url = "https://www.darksky.net/" + self.location_lat.to_s + self.location_lng.to_s
-    binding.pry
+    #binding.pry
     @doc ||= Nokogiri::HTML(open(url))
   end
 

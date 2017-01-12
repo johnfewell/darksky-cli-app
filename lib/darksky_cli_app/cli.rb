@@ -5,15 +5,19 @@ class DarkskyCliApp::CLI
   end
 
   def todays_weather(location)
-    @weather = DarkskyCliApp::Weather.new
-    @weather.get_geo(location)
-    @weather.today
-    # DarkskyCliApp::Scraper.new.get_page(location)
-    puts ""
+    location_search = Geocoder.search(location)
+    location_result = location_search[0]
+    name = location_result.data["formatted_address"]
+    location_lat = location_result.data["geometry"]["location"]["lat"]
+    location_lng = location_result.data["geometry"]["location"]["lng"]
+    url = "https://www.darksky.net/forecast/" + location_lat.to_s + "," + location_lng.to_s
+    @weather = DarkskyCliApp::Weather.new(name, url)
     puts "----------------------"
-    puts "#{@weather.now} #{@weather.later_desc}"
-    puts @weather.later
+    puts "#{@weather.name}: #{@weather.now_temp} #{@weather.now_one_word} #{@weather.later_desc}"
+    #binding.pry
+    puts @weather.later if @weather.later != ""
     puts "----------------------"
+
   end
 
   def ten_day_forecast
@@ -31,14 +35,6 @@ class DarkskyCliApp::CLI
     puts "#{@weather.days_names[6]} H:#{@weather.days_temps_max[6]} L:#{@weather.days_temps_min[6]} #{@weather.days_summary[7]}"
     puts "#{@weather.days_names[7]} H:#{@weather.days_temps_max[7]} L:#{@weather.days_temps_min[7]} #{@weather.days_summary[8]}"
     puts "----------------------"
-  end
-
-  def get_geo(location)
-    location_search = Geocoder.search(location)
-    location_result = location_search[0]
-    location_lat = location_result.data["geometry"]["location"]["lat"]
-    location_lng = location_result.data["geometry"]["location"]["lng"]
-    #binding.pry
   end
 
   def menu
@@ -67,5 +63,3 @@ class DarkskyCliApp::CLI
     end
   end
 end
-
-
