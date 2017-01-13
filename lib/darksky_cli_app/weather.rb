@@ -1,7 +1,6 @@
-# coding: utf-8
 require 'pry'
 class DarkskyCliApp::Weather
-attr_accessor :name, :now, :later, :later_desc, :eight_day_desc, :eight_day_days, :now_one_word, :days_temps_max, :days_names, :days_summary, :days_temps_min, :url, :location_lat, :location_lng
+attr_accessor :name, :now, :later, :later_desc, :now_one_word, :days_temps_max, :days_names, :days_summary, :days_temps_min, :url
 
   def initialize(name = nil, url = nil)
     @name = name
@@ -12,7 +11,6 @@ attr_accessor :name, :now, :later, :later_desc, :eight_day_desc, :eight_day_days
     @days_temps_min = []
     @days_summary = []
     @days_names = []
-    @eight_day_days = []
   end
 
 #this is just the number and degree symbol

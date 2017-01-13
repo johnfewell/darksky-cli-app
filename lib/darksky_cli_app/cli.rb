@@ -4,24 +4,25 @@ class DarkskyCliApp::CLI
     menu
   end
 
-  def todays_weather(location)
-    location_search = Geocoder.search(location)
+  def todays_weather(input)
+    url = get_geo(input)
+    @weather = DarkskyCliApp::Weather.new(@name, url)
+    puts "----------------------"
+    puts "#{@weather.name}: #{@weather.now_temp} #{@weather.now_one_word} #{@weather.later_desc}"
+    puts @weather.later if @weather.later != ""
+    puts "----------------------"
+  end
+
+  def get_geo(input)
+    location_search = Geocoder.search(input)
     location_result = location_search[0]
-    name = location_result.data["formatted_address"]
+    @name = location_result.data["formatted_address"]
     location_lat = location_result.data["geometry"]["location"]["lat"]
     location_lng = location_result.data["geometry"]["location"]["lng"]
     url = "https://www.darksky.net/forecast/" + location_lat.to_s + "," + location_lng.to_s
-    @weather = DarkskyCliApp::Weather.new(name, url)
-    puts "----------------------"
-    puts "#{@weather.name}: #{@weather.now_temp} #{@weather.now_one_word} #{@weather.later_desc}"
-    #binding.pry
-    puts @weather.later if @weather.later != ""
-    puts "----------------------"
-
   end
 
   def ten_day_forecast
-    #@weather = DarkskyCliApp::Weather.new.ten_day
     @weather.days_temps
     puts "----------------------"
     puts @weather.days_summary[0]
@@ -40,7 +41,7 @@ class DarkskyCliApp::CLI
   def menu
     input = nil
     while input != "exit"
-    puts "Enter a location to get today's weather forecast:"
+    puts "Enter a location to get today's weather forecast. (type exit to quit)"
     input = gets.strip.downcase
     if input == "exit"
       exit
