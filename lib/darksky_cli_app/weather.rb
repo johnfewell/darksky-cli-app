@@ -41,7 +41,10 @@ attr_accessor :name, :url, :later, :later_desc, :now_one_word, :days_names, :day
     @days_temps_max = @doc.xpath("//span[@class='maxTemp']").text.split(/\u02DA/).map! {|x| x + "\u02DA"}
     @days_temps_min = @doc.xpath("//span[@class='minTemp']").text.split(/\u02DA/).map! {|x| x + "\u02DA"}
     @days_names = @doc.xpath("//span[@class='name']").text.split(" ")
-    @days_summary = @doc.xpath("//div[@class='summary']").text.strip.gsub! 'in.', 'inches'
+    @days_summary = @doc.xpath("//div[@class='summary']").text
+    if @days_summary.include?(" in.")
+      @days_summary.strip.gsub! 'in.', 'inches'
+    end
     @days_summary = @days_summary.split(".").map! {|x| x.strip + "."}
   end
 
