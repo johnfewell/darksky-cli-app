@@ -17,12 +17,12 @@ attr_accessor :name, :url, :later, :later_desc, :now_one_word, :days_names, :day
     @doc = Nokogiri::HTML(open(url))
   end
 
-#this is just the number and degree symbol
+#this is only the number and degree symbol
   def now_temp
     @now_temp = @doc.xpath("//span[@class='temp swip']").text
   end
 
-#this is the one word desc of the weather
+#this is the one word desc of the current weather
   def now_one_word
     @now_one_word = @doc.xpath("//span[@class='summary swap']").text
   end
@@ -44,10 +44,5 @@ attr_accessor :name, :url, :later, :later_desc, :now_one_word, :days_names, :day
     @days_summary = @doc.xpath("//div[@class='summary']").text.strip.gsub! 'in.', 'inches'
     @days_summary = @days_summary.split(".").map! {|x| x.strip + "."}
   end
-
-
-  # def doc
-  #   @doc
-  # end
 
 end
