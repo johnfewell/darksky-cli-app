@@ -9,13 +9,13 @@ class DarkskyCliApp::CLI
     line_length = []
     @weather = DarkskyCliApp::Weather.new(input)
     current_weather_string = "#{@weather.name}: #{@weather.now_temp} #{@weather.now_one_word} #{@weather.later_desc}"
-    later_weather_string = "#{@weather.name}: #{@weather.now_temp} #{@weather.now_one_word} #{@weather.later_desc}"
+    #later_weather_string = "#{@weather.name}: #{@weather.now_temp} #{@weather.now_one_word} #{@weather.later_desc}"
     line_length << current_weather_string.size / 4
-    line_length << later_weather_string.size / 4
+    line_length << @weather.later.size / 4
     separator = "=---" * (line_length.max + 1) + "="
     puts separator
     puts current_weather_string
-    puts later_weather_string if later_weather_string != ""
+    puts @weather.later if @weather.later != ""
     puts separator
   end
 
