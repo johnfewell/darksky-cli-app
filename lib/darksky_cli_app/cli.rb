@@ -5,36 +5,26 @@ class DarkskyCliApp::CLI
   end
 
   def todays_weather(input)
-    url = get_geo(input)
-    @weather = DarkskyCliApp::Weather.new(@name, url)
+    # url = get_geo(input)
+    @weather = DarkskyCliApp::Weather.new(input)
     puts "----------------------"
     puts "#{@weather.name}: #{@weather.now_temp} #{@weather.now_one_word} #{@weather.later_desc}"
     puts @weather.later if @weather.later != ""
     puts "----------------------"
   end
 
-  def get_geo(input)
-    location_search = Geocoder.search(input)
-    location_result = location_search[0]
-    @name = location_result.data["formatted_address"]
-    location_lat = location_result.data["geometry"]["location"]["lat"]
-    location_lng = location_result.data["geometry"]["location"]["lng"]
-    url = "https://www.darksky.net/forecast/" + location_lat.to_s + "," + location_lng.to_s
-  end
-
   def ten_day_forecast
     @weather.days_temps
+    week_summary = @weather.days_summary.shift 
+    days_array = []
+    days_array << @weather.days_names
+    days_array << @weather.days_temps_max
+    days_array << @weather.days_temps_min
+    days_array << @weather.days_summary
     puts "----------------------"
-    puts @weather.days_summary[0]
+    puts week_summary
     puts "----------------------"
-    puts "#{@weather.days_names[0]} H:#{@weather.days_temps_max[0]} L:#{@weather.days_temps_min[0]} #{@weather.days_summary[1]}"
-    puts "#{@weather.days_names[1]} H:#{@weather.days_temps_max[1]} L:#{@weather.days_temps_min[1]} #{@weather.days_summary[2]}"
-    puts "#{@weather.days_names[2]} H:#{@weather.days_temps_max[2]} L:#{@weather.days_temps_min[2]} #{@weather.days_summary[3]}"
-    puts "#{@weather.days_names[3]} H:#{@weather.days_temps_max[3]} L:#{@weather.days_temps_min[3]} #{@weather.days_summary[4]}"
-    puts "#{@weather.days_names[4]} H:#{@weather.days_temps_max[4]} L:#{@weather.days_temps_min[4]} #{@weather.days_summary[5]}"
-    puts "#{@weather.days_names[5]} H:#{@weather.days_temps_max[5]} L:#{@weather.days_temps_min[5]} #{@weather.days_summary[6]}"
-    puts "#{@weather.days_names[6]} H:#{@weather.days_temps_max[6]} L:#{@weather.days_temps_min[6]} #{@weather.days_summary[7]}"
-    puts "#{@weather.days_names[7]} H:#{@weather.days_temps_max[7]} L:#{@weather.days_temps_min[7]} #{@weather.days_summary[8]}"
+    puts days_array.transpose.map {|x| x.join(" ")}.join("\n")
     puts "----------------------"
   end
 
